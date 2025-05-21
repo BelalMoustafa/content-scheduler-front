@@ -1,0 +1,192 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+⚛️ React Frontend Engineering Standards
+🏗 Architecture & Structure
+Use a feature-based modular structure to ensure scalability and maintainability.
+
+Each feature module must be fully isolated and contain:
+
+Components (UI building blocks)
+
+Pages (route-level views)
+
+Services (API interactions)
+
+Slices or State Logic (Redux Toolkit / Zustand / TanStack Query)
+
+Hooks (custom logic extraction)
+
+Types (TypeScript interfaces)
+
+Tests (unit and integration)
+
+Recommended structure:
+
+css
+Copy
+Edit
+src/
+  features/
+    posts/
+      components/
+      pages/
+      services/
+      hooks/
+      types/
+      slices/
+Global/shared utilities (UI components, hooks, types) should live in src/shared/.
+
+No circular dependencies between modules.
+
+No duplicate logic — abstract shared flows into custom hooks or services.
+
+Keep App.tsx and index.tsx minimal and clean.
+
+🧠 Design & Code Quality
+Follow Clean Architecture principles with strong separation of concerns:
+
+Components are purely presentational — no logic, no API calls.
+
+Services handle all external API communication.
+
+Hooks manage business logic, API orchestration, and state transitions.
+
+Never place API logic directly in components or route files.
+
+Code must strictly follow:
+
+SOLID Principles
+
+DRY (Don't Repeat Yourself)
+
+KISS (Keep It Simple and Straightforward)
+
+YAGNI (You Aren’t Gonna Need It)
+
+Additional standards:
+
+Use TypeScript with strict typing.
+
+Code must be clean, consistent, testable, and self-documenting.
+
+Follow ESLint + Prettier rules across the project.
+
+Use meaningful and context-aware names for variables, functions, and components.
+
+🔐 Security (Top-Level)
+Store access tokens securely (HTTP-only cookies or secure storage).
+
+Use route guards or higher-order components to protect sensitive pages.
+
+Sanitize and validate all user input on both client and server.
+
+Never trust frontend input blindly — always treat it as potentially malicious.
+
+Handle permissions client-side as a secondary layer — never rely on it alone.
+
+Avoid exposing any sensitive data or internal structure via the frontend.
+
+Apply throttling and feedback mechanisms on login, registration, and submission forms.
+
+📦 API Integration Standards
+Create a global API service layer (e.g., apiClient.ts) using Axios or Fetch.
+
+Use React Query / TanStack Query or RTK Query for caching, retries, and revalidation.
+
+Wrap all API responses in a consistent format:
+
+ts
+Copy
+Edit
+interface ApiResponse<T = any> {
+  success: boolean;
+  message: string;
+  data?: T;
+  errors?: string[];
+}
+Handle all error responses gracefully and informatively (Toast, Snackbar).
+
+Use accurate and meaningful messages based on backend feedback.
+
+Never expose raw errors or stack traces to users.
+
+🔄 Routing & Access Control
+Use React Router v6+.
+
+Implement route-level guards for:
+
+Authentication
+
+Role-based access (if applicable)
+
+Use layouts to separate public and protected routes:
+
+/auth/login, /auth/register → Public Layout
+
+/dashboard, /posts → Protected Layout
+
+🎨 UI & UX Guidelines
+Use a modern UI framework (e.g., Tailwind CSS, MUI, or Ant Design).
+
+Ensure full responsiveness across all breakpoints.
+
+Follow consistent design patterns:
+
+Form validations with visual feedback
+
+Accessible components (ARIA roles, labels, keyboard navigation)
+
+Status indicators (loading, success, error)
+
+UX Best Practices:
+
+Use form character counters where needed (e.g., platform character limits).
+
+Lazy load heavy components when applicable.
+
+Provide meaningful skeletons/spinners during async loading.
+
+🧪 Testing & Quality Assurance
+Use Jest + React Testing Library for:
+
+Component behavior
+
+User interaction
+
+Edge cases
+
+Ensure all business-critical logic is covered.
+
+All services and hooks must be testable and mockable.
+
+Prefer dependency injection for enhanced testability.
+
+⚙️ DevOps & Production Readiness
+Store environment variables in .env.local; never commit secrets.
+
+Provide .env.example with sane defaults.
+
+Enable source maps and error boundaries for debugging in production.
+
+Track exceptions using tools like Sentry, Bugsnag, or LogRocket.
+
+Implement build-time optimizations:
+
+Tree shaking
+
+Lazy loading
+
+Image and asset optimization
+
+✅ Final Notes
+Write code that is easy for others to understand, test, and maintain.
+
+Maintain high code readability and modularity.
+
+Prioritize security, performance, and developer experience.
+
+Every component, hook, and service should have a single responsibility.
+
